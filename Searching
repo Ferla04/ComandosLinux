@@ -1,0 +1,225 @@
+//-----------------------------------------[ GREP ]----------------------------------------------//
+LINK DE REFERENCIA GREP: https://www.hostinger.co/tutoriales/comando-grep-linux
+
+    grep: empleado para buscar cadenas de caracteres dentro de un archivo especifico (o dentro de una salida previa de otro comando ejecutado), nos permite buscar texto, patrones y caracteres tanto en otros ficheros como salida de otros comandos.
+
+    palabras a buscar:
+    -pardo
+    -error
+
+    ● SINTAXIS:
+    grep (búsqueda) (archivo)
+    -búsqueda: la palabra que estás buscando
+    -archivo: el archivo en el que estás buscando la palabra
+
+    ● Ejemplos:
+        grep pardo nombre.txt
+        grep pardo * --> lo busca universalmente
+        
+        NOTA: NO SE PUEDE buscar contenido dentro de un directorio SOLAMENTE en un fichero(documento txt)
+
+        ► Comando grep -s: Evitar los directorios y aquellos ficheros que no tengamos permiso para leer
+            grep -s pardo *
+
+        ► Direcccion /var/log: sitio donde se dejan los mensajes del sistema o otros productos.
+        Uso:    - cd /var/log    
+                - ls
+                - grep palabra_error *.log --> todos los documentos que terminan en .log
+                - grep -s palabra_error *.log 
+
+        ► grep -sl palabra_error *.log
+        Solo nos da los ficheros donde esta la palabra error.
+
+        ► grep -sc palabra_error *.log 
+        Cuantas veces se encuentra la palabra buscada en los ficheros.
+
+        ► grep -si palabra_error *.log 
+        la búsqueda no distinguirá entre mayúsculas y minúsculas. Es decir, si quieres buscar la palabra «auto» será lo mismo que «AUTO»
+
+        ► grep -sv palabra_error *.log
+        con esta opción, se nos muestran las líneas que no coinciden con el patrón que hemos buscado
+
+        Hasta ahora hemos visto ejemplos donde buscamos una sola palabra. Grep admite múltiples consultas en un solo comando. El comando se vería así:
+        ► grep búsqueda1 archivo | grep búsqueda2 archivo
+        El comando funciona de forma muy simple. Primero, buscamos Búsqueda1 y luego pasamos después de la barra a un segundo comando grep para la segunda palabra: Búsqueda2.
+
+        ► grep -l palabra_a_buscar ./* 
+        También es posible buscar en varios archivos con un solo comando,En el terminal, se mostrarán los archivos que contienen la palabra que buscaste.
+
+
+//-----------------------------------------[ FIND ]----------------------------------------------//
+LINK DE REFERENCIA FIND: https://www.hostinger.co/tutoriales/como-usar-comando-find-locate-en-linux/
+
+    find: permite realizar búsquedas de archivos o carpetas dentro de un sistema de archivos Linux a partir de una expresión dada.
+    ES un comando Linux que nos permite encontrar archivos y directorios tomando como base: nombres, fecha de creacion, tamaño etc...
+
+    ● SINTAXIS:
+    find <startingdirectory> <options> <search term>
+
+    <startingdirectory> es el punto de origen de donde deseas iniciar la búsqueda. 
+    Puede ser reemplazado con varios argumento, incluyendo:
+
+        / (slash) – busca en todo el sistema.
+        . (punto) – busca en la carpeta en la que estás trabajando actualmente (directorio actual).
+        ~ (tilde) – para buscar desde tu directorio home.
+        COMODINES
+        ? (interrogacion) – si no se los caracteres señala/reemplaza un caracter.
+        * (asteriscos) – señala un cadena de caracteres.
+
+    <options> se usa para tu archivo. Este podría ser el nombre, tipo, fecha de creación del archivo, etc.
+    <searchterm> es donde se especificará el término de búsqueda relevante.
+
+
+    ● BUSQUEDA POR TIPO
+    Linux permite a los usuarios listar toda la información basada en sus tipos. Hay varios filtros que puedes usar:
+
+    d – directorio o carpeta
+    f – archivo normal
+    c – dispositivos de caracteres
+    b – dispositivos de bloque
+    l – enlace simbólico --> indica un acceso a un directorio o fichero que se encuentra en un lugar distinto dentro de la estructura de directorios.
+
+    Un ejemplo simple del uso del tipo de archivo para la búsqueda se puede ver a continuación:
+
+    EJ: find / -type d
+
+
+    ● BUSQUEDA POR TAMAÑO
+    Linux te brinda la opción de buscar archivos según sus tamaños. La sintaxis básica para buscar archivos por tamaño es:
+
+    find <startingdirectory> -size <size-magnitude> <size-unit>
+    Puedes especificar las siguientes unidades de tamaño:
+
+    c – bytes
+    k – kilobytes
+    M – megabytes
+    G – gigabytes
+    b – trozos de 512 bytes
+
+    EJ: find / -size 10M
+
+
+    ● Ejemplos:
+    NAME:
+        ► find . -name "nombre_archivo.txt"
+
+        .                       El punto indica que la busqueda sera en el directorio actual.
+        -name                   Señala el nombre del archivo que se va a buscar.
+        "nombre_archivo.txt"    El nombre del archivo tiene que ir entre comillas.
+
+        ► find . -name "???????2.txt"
+        Aqui si no te acuerdas como se llama el archivo pero sabes en que termina y cuantos caracteres tiene los cambias con la misma cantidad de signos de interrogacion.
+
+        ► find . -name "*.txt"
+        Si no se sabe la cantidad de caracteres o quieres saber los archivos que terminan en un extencion esta es una buena opcion
+
+        ►  find / -name "nombre_archivo.txt" / 
+        Estamos diciendo que se haga la busqueda en todo el sistema.
+
+        ►  find ./carpeta -type d
+        EJ: find ./Para\ Inscripciones/ -type f
+
+        -type (tipo)   Busqueda por tipos de archivos(ARRIBA ESTAN TODOS LOS TIPOS)
+        ./carpeta      Realiza la búsqueda y listado de los directorios que hay dentro de la ubicación que le  especificamos(carpeta)
+
+    SIZE
+        ► find . -size -(tamaño) -name "*.txt"
+        EJ: find . -size -10M -name "*.txt"
+        La busqueda sera en el directorio actual, el PARAMETRO(size) para el tamaño maximo y el nombre de cualquier archivo que su extencion sea .txt
+
+    BUSQUEDA PROPIEDAD
+    
+        Linux te da la capacidad de especificar tus búsquedas según la propiedad del archivo. Para buscar archivos de un determinado propietario, se debe ejecutar el siguiente comando:
+
+        ► find / -user john
+
+        Esto devolverá una lista de todos los archivos que posee el usuario llamado john. Similar a los nombres de usuario, también podemos buscar archivos a través de nombres de grupo:
+
+        ► find / -group classroom
+
+    BUSQUEDA POR PERMISOS
+
+        Los usuarios pueden buscar archivos basados ​​en los permisos de los archivos con la opción -perm. Por ejemplo:
+
+        ► find / -perm 644
+
+        En Linux, 644 corresponde a permisos de lectura y escritura. Lo que significa que este comando buscará todos los archivos que solo tienen permisos de lectura y escritura. Puedes jugar con esta opción un poco más, así:
+
+        ► find / -perm -644
+        Al agregar un guión, se mostrarán todos los archivos que tengan al menos el permiso 644.
+
+    OTRAS OPCIONES
+        Además de todos estos métodos de búsqueda de archivos, hay otras opciones útiles que deberías recordar.
+
+        Por ejemplo, para buscar archivos y carpetas vacíos en tu sistema, usa lo siguiente:
+        ► find / -empty
+
+        Del mismo modo, para buscar todos los ejecutables guardados en tu disco, utiliza la opción -exec:
+        ► find / -exec
+
+        Para buscar archivos legibles, puedes ejecutar el siguiente comando:
+        ► find / -read
+
+    FECHA
+    
+        Si quieres buscar archivos en función de su fecha de acceso y las registros de fecha de modificación, Linux te ofrece las herramientas para hacerlo. Hay 3 registros de tiempo de los cuales Linux realiza seguimiento en los archivos:
+
+        ★ Tiempo de acceso (-atime) – Fecha más reciente en que el archivo fue leído o escrito.
+        ★ Tiempo de modificación (-mtime) – Fecha más reciente en que se modificó el archivo.
+        ★ Hora de cambio (-ctime) – Fecha más reciente en que se actualizaron los metadatos del archivo.
+
+        Esta opción debe usarse con un número que especifica cuántos días pasaron desde que se accedió, modificó o cambió el archivo:
+        ► find / -atime 1
+        Este comando mostrara todos los archivos a los que se accedió hace un día desde el momento actual.
+
+        Podemos hacer que nuestras consultas sean más precisas agregando los signos más (+) y menos (-) precediendo al número de días. Por ejemplo:
+        ► find / -mtime +2
+        Esto listará todos los archivos que tienen un tiempo de modificación de más de dos días.
+
+        Para buscar todos los archivos cuyos metadatos se actualizaron hace menos de un día, ejecuta lo siguiente:
+        ► find / -ctime -1
+        
+        Aunque no se usan seguido, hay algunos argumentos adicionales que también están relacionados con las búsquedas por fecha. El argumento -mmin busca archivos modificados en base a minutos. Se puede usar así:
+        ► find / -mmin -1
+
+        Además, el argumento -newer se puede usar para comparar la antigüedad de dos archivos y encontrar el más reciente.
+        ► find / -newer my-file
+
+//-----------------------------------------[ LOCATE ]----------------------------------------------//
+LINK DE REFERENCIA FIND: https://www.hostinger.co/tutoriales/como-usar-comando-find-locate-en-linux/
+
+    locate: permite realizar búsqueda de archivos a partir de su nombre.
+    El comando locate es una alternativa útil, ya que es más rápido que find para realizar búsquedas. Eso se debe a que sólo escanea tu base de datos de Linux en lugar de todo el sistema. Además, la sintaxis es más fácil de escribir.
+
+    ● Cómo instalar el paquete locate
+    Por defecto, Linux no viene con el comando locate preinstalado. Para obtener el paquete, ejecuta los siguientes comandos en tu terminal:
+        -sudo apt-get update
+        -sudo apt-get install mlocate
+        -sudo updatedb --> Actualizar la base de datos(Esto sirve para no mostrar archivos que han sido eliminados)
+
+    ● SINTAXIS
+    Ahora puedes usar el comando para buscar archivos usando esta sintaxis:
+    locate [my-file]
+    El comando locate estándar a veces puede mostrar archivos que han sido eliminados, si la base de datos no fue actualizada. La mejor solución es actualizar manualmente la base de datos ejecutando lo siguiente:
+    -sudo updatedb
+
+    ● Ejemplos
+
+        ► locate -r my-file$
+        Buscar por el nombre exacto del archivo
+        La sintaxis básica sólo te permite buscar archivos que contengan el término de búsqueda. Si quieres obtener el archivo con el nombre exacto, puedes utilizar la opción -r y añadir el símbolo de dólar ($) al final del término de búsqueda.
+
+        ► locate -c my-file
+        Contar el número de archivos, en lugar de listar todos los archivos, te dará el número total de ellos.
+
+        ► locate -i my-file
+        Ignorar distinción entre mayúsculas y minúsculas
+
+        ► locate -e my-file
+        Mostrar archivos existentes, Como hemos mencionado, el comando locate de Linux puede incluso mostrarte un archivo eliminado si no has actualizado la base de datos. Afortunadamente, puedes resolver esto usando la opción -e
+
+        ► locate -q my-file
+        Desactiva los errores durante la búsqueda
+
+        ► locate my-file n 10
+        Limitar el número de resultados de búsqueda,Si quieres limitar el número de resultados de la búsqueda, -n <number> funcionará. Sin embargo, recuerda que debes poner la opción al final de la línea de comandos.

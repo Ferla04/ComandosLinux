@@ -1,0 +1,120 @@
+//------------------------------------[ BASES NUEMERICAS ]-------------------------------------------//
+
+    ● Decimal -> Diez -> 0,1,2,3,4,5,6,7,8,9 -> 76 = 7x10^1 + 6x10^0 
+
+    Donde sabemos que 10^0 = 1
+    76 = 7x10^1 + 6x10^0 = 7x10^1 + 6x1 = 70 + 6 = 76
+    851 = 8x10^2 + 5x10^1 + 1x10^0 = 8x100 + 5x10 + 1+1 = 800 + 50 + 1 = 851
+
+    ● Binario -> Dos -> 0,1 -> 10010
+
+    0,1 -> 10010 = 1x2^4 + 0x2^3 + 0x2^2 + 1x2^1 + 0x2^0 
+                = 1x2^4 + 0x2^3 + 0x2^2 + 1x2^1 + 0x1
+                =  1x16 + 0x8 + 0x4 + 1x2 + 0x1 = 18
+
+    ● Hexadecimal -> Diez y seis -> 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+
+    1DF3 (Hexadecimal) = 1x16^3 + Dx16^2 + Fx16^1 + 3x16^0 = 1x4096 + 13x256 + 15x16 + 3 
+                    = 4096 + 3328 + 240 + 3 = 7667 (Decimal)
+
+    ● Octal -> Ocho -> 0,1,2,3,4,5,6,7
+
+    573 (octal) = 5x8^2 + 7x8^1 + 3x8^0 
+                = 5x64 + 7x8 + 3x1 
+                = 320 + 56 + 3 = 379 (Decimal)
+
+    -------------------------------------------------------
+    2, 8, 16 -> pueden ser expresadas como POTENCIAS de 2
+    2 = 2^1 (Base Binaria)
+    8 = 2^3 (Base Octal)
+    16 = 2^4 (Base Hexadecimal)
+
+    Binario:
+    Maquinas no entiende (Seres racionales)
+    Maquinas interpretan señales eléctricas [0-5v] – [0-3.3] -> 0, > 0 => 1
+
+    Lenguaje Ensamblador -> Assembler -> Assembly
+
+//------------------------------------[ FILE PERMISSION ]-------------------------------------------//
+
+    Octal: Hasta 8 posibles caracteres o símbolos
+    8 = 2^3
+
+    Dependiendo en que inicial comienza son los permisos que le estamos dando
+
+        d – directorio o carpeta
+        - – archivo
+        l – enlace simbólico --> indica un acceso a un directorio o fichero que se encuentra en un lugar distinto dentro de la estructura de directorios.
+
+    ● permisos ubicación
+
+        Apartados
+                rwx rwx rwx
+        posicion:  1   2   3
+
+        Posicion 1: Permisos otorgado al dueño/propietario del archivo.
+        Posicion 2: Permisos otorgado al grupo del archivo.
+        posicion 3: Permisos otorgado a todos los otros usuario o grupos del sistema.
+
+    chmod: Permite cambiar las propiedades ó permisos de un archivo o carpeta, trabaja sobre base 8
+
+    ● rwx definition
+
+        2 1 0
+        r w x   r= 4    r= 1*2^2     r = READ        
+                w= 2    w= 1*2^1     w = WRITE
+                x= 1    x= 1*2^0     x = EXCECUTION         
+
+
+    ● EJEMPLOS
+
+        - rw- r-- --x   1 deibi  staff  20472 Aug  5 14:34 documents.txt
+        1   2   3        4      5
+
+        comienza por (-) significa que es un archivo
+        Apartado 1: 
+                rw- : significa que el permiso otorgado para el DUEÑO del archivo es leer y escribir.
+                r= 4 w= 2 
+                r + w = 6
+
+        Apartado 2: 
+                r-- : significa que el permiso otorgado para el GRUPO DE ARCHIVOS es leer.
+                r = 4
+        
+        Apartado 3: 
+                --x : significa que el permiso otorgado para el OTROS USUARIOS O GRUPOS es ejecutar.
+                x= 1
+
+        Apartado 4: Permisos otorgado al dueño/propietario del archivo, en este caso es deibi.
+
+        Apartado 5:  Permisos otorgado al grupo del archivo, en este caso es staff.
+
+        LA SUMA DE TODOS LOS APARTADOS:
+        - rw- r-- --x
+        1   2   3
+
+        ♥ apartado 1: r + w = 6
+        ♥ apartado 2: r = 4
+        ♥ apartado 3: x = 1
+
+        permiso 641
+
+//------------------------------------[ COMANDO chmod ]-------------------------------------------//
+
+    Cambiar los propietarios de archivos y carpetas
+    utilizaremos el comando chown
+
+    ● SINTAXIS
+
+    chown [propietario/grupo propietario] [nombre del archivo]
+
+    ● COMANDOS
+        ► Cambiar propietario
+        chown hostinger miarchivo.txt
+        Ej: hostinger - propietario del archivo que queremos asignar
+
+        ► Cambiar el grupo propietario(dos puntos (:) antes del nombre)
+        chown :clientes miarchivo.txt
+
+        ► cambiar el propietario y el grupo al mismo tiempo(el propietario debe ir antes del grupo propietario)
+        chown hostinger:clientes miarchivo.txt
